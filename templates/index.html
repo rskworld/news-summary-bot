@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    News Summary Bot - Landing Page
+    Developer: Molla Samser
+    Design & Testing: Rima Khatun
+    Company: RSK World
+    Year: 2026
+    Website: https://rskworld.in
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Summary Bot - AI Powered Updates</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <i class="fas fa-newspaper text-danger"></i> RSK NEWS BOT
+        </div>
+        <div class="nav-links">
+            <a href="/demo" class="btn-premium">Live Demo</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1 class="animate-up">Stay Informed, <br><span style="color: #dc3545;">Summarized</span>.</h1>
+        <p>Our AI-powered News Summary Bot fetches the latest headlines from across the globe and compresses them into readable, bite-sized summaries for busy professionals.</p>
+        <div class="hero-btns">
+            <a href="/demo" class="btn-premium">Explore Real-time News</a>
+        </div>
+    </header>
+
+    <section style="padding: 5rem 10%;" id="features">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">Core Features</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div class="glass-card">
+                <i class="fas fa-bolt" style="font-size: 2rem; color: #dc3545; margin-bottom: 1rem;"></i>
+                <h3>Real-time Fetching</h3>
+                <p>Always get the latest news using high-performance APIs.</p>
+            </div>
+            <div class="glass-card">
+                <i class="fas fa-brain" style="font-size: 2rem; color: #0d6efd; margin-bottom: 1rem;"></i>
+                <h3>AI Summarization</h3>
+                <p>Powered by OpenAI GPT-3.5 for high-quality article summaries.</p>
+            </div>
+            <div class="glass-card">
+                <i class="fas fa-filter" style="font-size: 2rem; color: #ffc107; margin-bottom: 1rem;"></i>
+                <h3>Category Filtering</h3>
+                <p>Filter news by Business, Tech, Health, Science, and more.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 <a href="https://rskworld.in" style="color: #dc3545; text-decoration: none;">RSK World</a>. All rights reserved.</p>
+        <p>Developed by <strong>Molla Samser</strong> | Design & Testing by <strong>Rima Khatun</strong></p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

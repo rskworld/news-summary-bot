@@ -1,0 +1,17 @@
+# News Summary Bot Dependencies
+# Developer: Molla Samser
+# Design & Testing: Rima Khatun
+# Company: RSK World
+# Website: https://rskworld.in
+# Year: 2026
+
+# Core Framework
+flask
+flask-cors
+
+# API and HTTP
+requests
+openai
+
+# Environment and Configuration
+python-dotenv

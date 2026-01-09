@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    Admin Settings - News Summary Bot
+    Developer: Molla Samser
+    Design & Testing: Rima Khatun
+    Company: RSK World
+    Year: 2026
+    Website: https://rskworld.in
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - News Summary Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .settings-container {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .settings-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: var(--glass);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+        }
+        
+        .form-help {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.25rem;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(26px);
+        }
+        
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .status-online {
+            background: #28a745;
+        }
+        
+        .status-offline {
+            background: #dc3545;
+        }
+        
+        .status-warning {
+            background: #ffc107;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .system-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-newspaper"></i>
+                <h2>Admin Panel</h2>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard') }}" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.analytics_page') }}" class="nav-link">
+                        <i class="fas fa-chart-line"></i>
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.users') }}" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        Users
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.content') }}" class="nav-link">
+                        <i class="fas fa-newspaper"></i>
+                        Content
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.settings') }}" class="nav-link active">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.logout') }}" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="settings-header">
+                <h1>System Settings</h1>
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="resetSettings()">
+                        <i class="fas fa-undo"></i> Reset to Defaults
+                    </button>
+                    <button class="btn btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-grid">
+                <div class="settings-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-key"></i>
+                        API Configuration
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="newsApiKey">News API Key</label>
+                        <input type="password" id="newsApiKey" value="{{ settings.news_api_key }}" placeholder="Enter NewsAPI key">
+                        <div class="form-help">Get your key from https://newsapi.org</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="openaiApiKey">OpenAI API Key</label>
+                        <input type="password" id="openaiApiKey" value="{{ settings.openai_api_key }}" placeholder="Enter OpenAI API key">
+                        <div class="form-help">Get your key from https://platform.openai.com</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="validApiKeys">Valid API Keys (comma-separated)</label>
+                        <textarea id="validApiKeys" placeholder="key1,key2,key3">key1,key2,key3</textarea>
+                        <div class="form-help">Additional API keys for external access</div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-server"></i>
+                        Server Configuration
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="port">Server Port</label>
+                        <input type="number" id="port" value="{{ settings.port }}" min="1" max="65535">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="debug">Debug Mode</label>
+                        <div class="toggle-group">
+                            <span>Enable debug mode for development</span>
+                            <div class="toggle-switch {% if settings.debug == 'True' %}active{% endif %}" onclick="toggleSwitch(this)"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="secretKey">Secret Key</label>
+                        <input type="password" id="secretKey" value="your-secret-key-here" placeholder="Enter secret key">
+                        <div class="form-help">Used for session management and CSRF protection</div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Performance Settings
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="maxArticles">Max Articles per Category</label>
+                        <input type="number" id="maxArticles" value="{{ settings.max_articles_per_category }}" min="1" max="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cacheDuration">Cache Duration (seconds)</label>
+                        <input type="number" id="cacheDuration" value="{{ settings.cache_duration }}" min="60" max="3600">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="enableAnalytics">Analytics Collection</label>
+                        <div class="toggle-group">
+                            <span>Enable user analytics and tracking</span>
+                            <div class="toggle-switch {% if settings.enable_analytics == 'True' %}active{% endif %}" onclick="toggleSwitch(this)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Security Settings
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="rateLimit">Rate Limit (requests/hour)</label>
+                        <input type="number" id="rateLimit" value="100" min="1" max="10000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sessionTimeout">Session Timeout (minutes)</label>
+                        <input type="number" id="sessionTimeout" value="30" min="5" max="1440">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="enableCaptcha">CAPTCHA Protection</label>
+                        <div class="toggle-group">
+                            <span>Enable CAPTCHA for registration</span>
+                            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-container">
+                <h3 class="section-title">
+                    <i class="fas fa-info-circle"></i>
+                    System Information
+                </h3>
+                
+                <div class="system-info">
+                    <div class="info-row">
+                        <span class="info-label">Application Version</span>
+                        <span class="info-value">v1.0.0</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Python Version</span>
+                        <span class="info-value">3.8+</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Flask Version</span>
+                        <span class="info-value">2.0+</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Database Status</span>
+                        <span class="info-value">
+                            <span class="status-indicator status-online"></span>
+                            Connected
+                        </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Cache Status</span>
+                        <span class="info-value">
+                            <span class="status-indicator status-online"></span>
+                            Active
+                        </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Last Backup</span>
+                        <span class="info-value">Never</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Uptime</span>
+                        <span class="info-value">2 days, 14 hours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-container">
+                <h3 class="section-title">
+                    <i class="fas fa-tools"></i>
+                    Maintenance Actions
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <button class="btn btn-secondary" onclick="clearCache()">
+                        <i class="fas fa-trash"></i> Clear Cache
+                    </button>
+                    <button class="btn btn-secondary" onclick="backupDatabase()">
+                        <i class="fas fa-download"></i> Backup Database
+                    </button>
+                    <button class="btn btn-secondary" onclick="restartServer()">
+                        <i class="fas fa-sync"></i> Restart Server
+                    </button>
+                    <button class="btn btn-secondary" onclick="viewLogs()">
+                        <i class="fas fa-file-alt"></i> View Logs
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+        }
+
+        function saveSettings() {
+            const settings = {
+                news_api_key: document.getElementById('newsApiKey').value,
+                openai_api_key: document.getElementById('openaiApiKey').value,
+                port: document.getElementById('port').value,
+                debug: document.querySelector('#debug + .toggle-switch').classList.contains('active'),
+                max_articles_per_category: document.getElementById('maxArticles').value,
+                cache_duration: document.getElementById('cacheDuration').value,
+                enable_analytics: document.querySelector('#enableAnalytics + .toggle-switch').classList.contains('active'),
+                rate_limit: document.getElementById('rateLimit').value,
+                session_timeout: document.getElementById('sessionTimeout').value
+            };
+
+            fetch('/admin/api/settings/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(settings)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Settings saved successfully!');
+                } else {
+                    alert('Error saving settings: ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('Error saving settings: ' + error);
+            });
+        }
+
+        function resetSettings() {
+            if (confirm('Are you sure you want to reset all settings to defaults?')) {
+                location.reload();
+            }
+        }
+
+        function clearCache() {
+            if (confirm('Are you sure you want to clear all cache?')) {
+                fetch('/api/cache/clear', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Cache cleared successfully!');
+                        } else {
+                            alert('Error clearing cache');
+                        }
+                    });
+            }
+        }
+
+        function backupDatabase() {
+            alert('Database backup functionality would be implemented here');
+        }
+
+        function restartServer() {
+            if (confirm('Are you sure you want to restart the server? This will disconnect all users.')) {
+                alert('Server restart functionality would be implemented here');
+            }
+        }
+
+        function viewLogs() {
+            alert('Log viewing functionality would be implemented here');
+        }
+    </script>
+</body>
+</html>

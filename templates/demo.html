@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    News Summary Bot - Demo Interface
+    Developer: Molla Samser
+    Design & Testing: Rima Khatun
+    Company: RSK World
+    Year: 2026
+    Website: https://rskworld.in
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Bot Dashboard - RSK World</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <a href="/" style="text-decoration: none; color: inherit;"><i class="fas fa-newspaper text-danger"></i> RSK
+                NEWS BOT</a>
+        </div>
+        <div class="search-bar" style="display: flex; align-items: center;">
+            <button id="voiceSearchBtn" onclick="toggleVoiceSearch()" class="voice-btn" title="Voice Search"><i
+                    class="fas fa-microphone"></i></button>
+            <input type="text" id="newsQuery" placeholder="Search news..."
+                style="padding: 0.5rem 1rem; border-radius: 20px; border: none; background: var(--glass); color: white; border: 1px solid var(--glass-border);">
+            <button onclick="searchNews()" class="btn-premium"
+                style="padding: 0.5rem 1.5rem; margin-left: 10px;">Search</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar glass-card">
+            <h3>Categories</h3>
+            <ul class="category-list">
+                <li class="category-item active" onclick="loadCategory('general')"><i class="fas fa-globe"></i> General
+                </li>
+                <li class="category-item" onclick="loadCategory('business')"><i class="fas fa-briefcase"></i> Business
+                </li>
+                <li class="category-item" onclick="loadCategory('technology')"><i class="fas fa-laptop-code"></i>
+                    Technology</li>
+                <li class="category-item" onclick="loadCategory('entertainment')"><i class="fas fa-film"></i>
+                    Entertainment</li>
+                <li class="category-item" onclick="loadCategory('health')"><i class="fas fa-heartbeat"></i> Health</li>
+                <li class="category-item" onclick="loadCategory('science')"><i class="fas fa-flask"></i> Science</li>
+                <li class="category-item" onclick="loadCategory('sports')"><i class="fas fa-running"></i> Sports</li>
+                <li class="category-item" onclick="loadCategory('bookmarks')"
+                    style="border-top: 1px solid var(--glass-border); margin-top: 10px; padding-top: 10px;"><i
+                        class="fas fa-bookmark"></i> My Favorites</li>
+            </ul>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;"><span class="live-dot"></span>Trending Now</h3>
+                <div id="trending-topics" class="trending-container">
+                    <!-- Trends will be injected here -->
+                    <span class="trend-tag">Market</span>
+                    <span class="trend-tag">AI Tech</span>
+                    <span class="trend-tag">Global</span>
+                </div>
+            </div>
+        </aside>
+
+        <main>
+            <div id="news-grid" class="news-grid">
+                <!-- News items will be injected here -->
+                <div class="glass-card" style="grid-column: 1/-1; text-align: center;">
+                    <span class="loader"></span>
+                    <p>Fetching latest news headlines...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="summaryModal" class="summary-modal">
+        <div class="modal-content glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 id="modal-title">AI Summary</h2>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <select id="summaryLanguage" onchange="regenerateSummary()"
+                        style="background: var(--glass); color: white; border: 1px solid var(--glass-border); border-radius: 5px; padding: 5px;">
+                        <option value="English">English</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="French">French</option>
+                        <option value="German">German</option>
+                    </select>
+                    <button onclick="speakSummary()" class="btn-premium" style="padding: 5px 10px; font-size: 0.8rem;"
+                        title="Read Aloud"><i class="fas fa-volume-up"></i></button>
+                </div>
+            </div>
+            <hr style="margin: 1rem 0; border: none; border-top: 1px solid var(--glass-border);">
+            <div id="summary-text" style="color: #ddd; max-height: 300px; overflow-y: auto; line-height: 1.8;">
+                <span class="loader"></span> Generating AI Summary...
+            </div>
+            <div style="margin-top: 2rem; display: flex; gap: 10px;">
+                <button onclick="exportSummaryPDF()" class="btn-premium"><i class="fas fa-file-pdf"></i> Export
+                    PDF</button>
+                <button onclick="closeModal()" class="btn-premium" style="background: var(--glass);">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- jsPDF Library for Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
